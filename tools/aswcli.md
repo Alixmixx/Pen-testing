@@ -1,4 +1,4 @@
-##`awscli`
+# `awscli`
 
 Is the official command-line interface (CLI) provided by Amazon Web Services (AWS). It allows users to interact with various AWS services directly from the command line
 Used to interact with AWS servers, domains, and S3 buckets.

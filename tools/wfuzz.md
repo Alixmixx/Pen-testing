@@ -1,4 +1,4 @@
-##`wfuzz`
+# `wfuzz`
 
 wfuzz is a web application security testing tool used for identifying vulnerabilities related to input validation and session management
 

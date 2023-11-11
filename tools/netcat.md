@@ -1,4 +1,4 @@
-##`nc` (Netcat)
+# `nc` (Netcat)
 
 Netcat is a versatile networking utility that is used for reading from and writing to network connections using TCP or UDP protocols
 

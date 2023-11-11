@@ -1,4 +1,4 @@
-##`john` (John the Ripper)
+# `john` (John the Ripper)
 
 John the Ripper is an Open Source password security auditing and password recovery tool
 

@@ -1,4 +1,4 @@
-##`redis-cli`
+# `redis-cli`
 
 Used to connect to a Redis database.
 

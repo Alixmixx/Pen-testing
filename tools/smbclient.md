@@ -1,4 +1,4 @@
-##`smbclient`
+# `smbclient`
 
 Used to connect to Windows environments over SMB/CIFS.
 

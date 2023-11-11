@@ -1,4 +1,4 @@
-##`gobuster`
+# `gobuster`
 
 A fuzzer tool for finding domains and directories in URLs using wordlists.
 

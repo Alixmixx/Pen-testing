@@ -8,7 +8,7 @@ exploit:
 	' OR '1'='1'; --
 
 
-##`mysql` and `MariaDB`
+# `mysql` and `MariaDB`
 
 To connect to SQL databases:
 mysql -h <hostname> -u <user>
