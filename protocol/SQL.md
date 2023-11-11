@@ -1,4 +1,4 @@
-#### SQL Injection
+##SQL Injection
 
 Exploiting SQL databases through unsanitized input.
 - Example: `admin'#` to comment out the rest of the SQL query.
@@ -8,7 +8,7 @@ exploit:
 	' OR '1'='1'; --
 
 
-#### `mysql` and `MariaDB`
+##`mysql` and `MariaDB`
 
 To connect to SQL databases:
 mysql -h <hostname> -u <user>

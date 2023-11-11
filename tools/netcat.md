@@ -1,11 +1,11 @@
-#### `nc` (Netcat)
+##`nc` (Netcat)
 
 Netcat is a versatile networking utility that is used for reading from and writing to network connections using TCP or UDP protocols
 
-# To listen on a specific port
+### To listen on a specific port
 nc -l -p <port>
 
-# To connect to a server on a specific host and port
+### To connect to a server on a specific host and port
 nc <host> <port>
 
 File Transfer:
@@ -13,10 +13,10 @@ File Transfer:
 Netcat can be used to transfer files between systems.
 bash
 
-# On the receiving end
+### On the receiving end
 nc -l -p <port> > received_file
 
-# On the sending end
+### On the sending end
 nc <host> <port> < file_to_send
 
 
@@ -38,10 +38,10 @@ Chat Server and Client:
 Netcat can facilitate simple chat communication between systems.
 bash
 
-# On the server
+### On the server
 nc -l -p <port>
 
-# On the client
+### On the client
 nc <host> <port>
 
 Proxying:
@@ -49,13 +49,13 @@ Proxying:
 Netcat can act as a basic proxy to forward traffic between two hosts.
 bash
 
-# On the proxy server
+### On the proxy server
 nc -l -p <local_port> | nc <remote_host> <remote_port>
 
-# On the client
+### On the client
 nc -N <proxy_host> <proxy_port>
 
-# Listen for resverse shell
+### Listen for resverse shell
 nc -nvlp 1337
 
 Launch a web server on your machine and visit the URL:
